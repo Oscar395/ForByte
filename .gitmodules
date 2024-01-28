@@ -1,0 +1,3 @@
+[submodule "ForByte/vendor/spdlog"]
+	path = ForByte/vendor/spdlog
+	url = https://github.com/gabime/spdlog
