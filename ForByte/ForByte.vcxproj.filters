@@ -4,6 +4,9 @@
     <Filter Include="ForByte">
       <UniqueIdentifier>{80044E1B-ECE3-CCB6-F5FB-578D615A3318}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ForByte\Events">
+      <UniqueIdentifier>{64A0418B-506E-3591-3902-A6B7256F11F6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ForByte.h" />
@@ -16,9 +19,26 @@
     <ClInclude Include="src\ForByte\EntryPoint.h">
       <Filter>ForByte</Filter>
     </ClInclude>
+    <ClInclude Include="src\ForByte\Events\ApplicationEvent.h">
+      <Filter>ForByte\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ForByte\Events\Event.h">
+      <Filter>ForByte\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ForByte\Events\KeyEvent.h">
+      <Filter>ForByte\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ForByte\Events\MouseEvent.h">
+      <Filter>ForByte\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\ForByte\Log.h">
       <Filter>ForByte</Filter>
     </ClInclude>
+    <ClInclude Include="src\fbpch.h" />
+    <ClInclude Include="src\ForByte\Window.h">
+      <Filter>ForByte</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ForByte\Application.cpp">
@@ -27,5 +47,7 @@
     <ClCompile Include="src\ForByte\Log.cpp">
       <Filter>ForByte</Filter>
     </ClCompile>
+    <ClCompile Include="src\fbpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

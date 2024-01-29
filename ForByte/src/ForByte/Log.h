@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/fmt/ostr.h"
 
 namespace ForByte {
 	class FORBYTE_API Log
@@ -33,4 +34,3 @@ namespace ForByte {
 #define FB_WARM(...)        ::ForByte::Log::GetClientLogger()->warn(__VA_ARGS__)
 #define FB_ERROR(...)       ::ForByte::Log::GetClientLogger()->error(__VA_ARGS__)
 #define FB_FATAL(...)       ::ForByte::Log::GetClientLogger()->critical(__VA_ARGS__)
-

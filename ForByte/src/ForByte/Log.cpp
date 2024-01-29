@@ -1,3 +1,4 @@
+#include "fbpch.h"
 #include "Log.h"
 
 namespace ForByte {

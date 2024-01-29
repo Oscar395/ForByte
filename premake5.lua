@@ -10,6 +10,12 @@ workspace "ForByte"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include directories relative to root folder (solution directory)
+IncludeDir = {}
+IncludeDir["GLFW"] = "ForByte/vendor/GLFW/include"
+
+include "ForByte/vendor/GLFW"
+
 project "ForByte"
     location "ForByte"
     kind "SharedLib"
@@ -18,6 +24,9 @@ project "ForByte"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
     
+    pchheader "fbpch.h"
+    pchsource "ForByte/src/fbpch.cpp"
+
     files
     {
         "%{prj.name}/src/**.h",
@@ -26,7 +35,15 @@ project "ForByte"
 
     includedirs
     {
-        "%{prj.name}/vendor/spdlog/include"
+        "%{prj.name}/vendor/spdlog/include",
+        "%{prj.name}/src",
+        "%{IncludeDir.GLFW}"
+    }
+
+    links 
+    {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "system:windows"
