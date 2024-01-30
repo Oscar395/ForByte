@@ -3,6 +3,7 @@
 // For use by ForByte applications
 
 #include "ForByte/Application.h"
+#include "ForByte/Layer.h"
 #include "ForByte/Log.h"
 
 // ---Entry Point--------------------
