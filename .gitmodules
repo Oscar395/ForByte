@@ -4,3 +4,6 @@
 [submodule "ForByte/vendor/GLFW"]
 	path = ForByte/vendor/GLFW
 	url = https://github.com/TheCherno/GLFW
+[submodule "ForByte/vendor/imgui"]
+	path = ForByte/vendor/imgui
+	url = https://github.com/TheCherno/imgui

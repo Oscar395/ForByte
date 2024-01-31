@@ -13,8 +13,12 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "ForByte/vendor/GLFW/include"
+IncludeDir["Glad"] = "ForByte/vendor/Glad/include"
+IncludeDir["ImGui"] = "ForByte/vendor/imgui"
 
 include "ForByte/vendor/GLFW"
+include "ForByte/vendor/Glad"
+include "ForByte/vendor/imgui"
 
 project "ForByte"
     location "ForByte"
@@ -37,12 +41,16 @@ project "ForByte"
     {
         "%{prj.name}/vendor/spdlog/include",
         "%{prj.name}/src",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}",
+        "%{IncludeDir.ImGui}"
     }
 
     links 
     {
         "GLFW",
+        "Glad",
+        "ImGui",
         "opengl32.lib"
     }
 
@@ -54,7 +62,8 @@ project "ForByte"
         defines
         {
              "FB_PLATFORM_WINDOWS",
-             "FB_BUILD_DLL"
+             "FB_BUILD_DLL",
+             "GLFW_INCLUDE_NONE"
         }
 
         postbuildcommands
