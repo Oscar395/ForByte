@@ -10,6 +10,10 @@
 	#error ForByte only supports Windows!
 #endif // FB_PLATFORM_WINDOWS
 
+//#ifdef FB_DEBUG
+//	#define FB_ENABLE_ASSERTS
+//#endif
+
 #ifdef FB_ENABLE_ASSERTS
 	#define FB_ASSERT(x, ...) {if(!(x)) { FB_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debug_break(); } }
 	#define FB_CORE_ASSERT(x, ...) {if(!(x)) { FB_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debug_break(); } }
@@ -19,3 +23,5 @@
 #endif // FB_ENABLE_ASSERTS
 
 #define BIT(x) (1 << x)
+
+#define FB_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
