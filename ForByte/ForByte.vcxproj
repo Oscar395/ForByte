@@ -161,12 +161,14 @@
     <ClInclude Include="src\ForByte\Events\KeyEvent.h" />
     <ClInclude Include="src\ForByte\Events\MouseEvent.h" />
     <ClInclude Include="src\ForByte\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\ForByte\Input.h" />
     <ClInclude Include="src\ForByte\Layer.h" />
     <ClInclude Include="src\ForByte\LayerStack.h" />
     <ClInclude Include="src\ForByte\Log.h" />
     <ClInclude Include="src\ForByte\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\OpenGL\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\fbpch.h" />
   </ItemGroup>
@@ -177,6 +179,7 @@
     <ClCompile Include="src\ForByte\LayerStack.cpp" />
     <ClCompile Include="src\ForByte\Log.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\fbpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

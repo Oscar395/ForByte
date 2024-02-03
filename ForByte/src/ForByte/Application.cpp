@@ -5,6 +5,8 @@
 
 #include <glad/glad.h>
 
+#include "Input.h"
+
 namespace ForByte {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
@@ -55,6 +57,9 @@ namespace ForByte {
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
+			auto [x, y] = Input::GetMousePosition();
+			FB_CORE_TRACE("{0}, {1}", x, y);
 
 			m_Window->OnUpdate();
 		}
