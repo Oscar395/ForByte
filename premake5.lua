@@ -16,6 +16,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "ForByte/vendor/GLFW/include"
 IncludeDir["Glad"] = "ForByte/vendor/Glad/include"
 IncludeDir["ImGui"] = "ForByte/vendor/imgui"
+IncludeDir["glm"] = "ForByte/vendor/glm"
 
 include "ForByte/vendor/GLFW"
 include "ForByte/vendor/Glad"
@@ -36,7 +37,9 @@ project "ForByte"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl"
     }
 
     includedirs
@@ -45,7 +48,8 @@ project "ForByte"
         "%{prj.name}/src",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
-        "%{IncludeDir.ImGui}"
+        "%{IncludeDir.ImGui}",
+        "%{IncludeDir.glm}"
     }
 
     links 
@@ -105,7 +109,8 @@ project "Sandbox"
     includedirs
     {
         "ForByte/vendor/spdlog/include",
-        "ForByte/src"
+        "ForByte/src",
+        "%{IncludeDir.glm}"
     }
 
     links
