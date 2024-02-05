@@ -110,6 +110,7 @@ project "Sandbox"
     {
         "ForByte/vendor/spdlog/include",
         "ForByte/src",
+        "ForByte/vendor",
         "%{IncludeDir.glm}"
     }
 

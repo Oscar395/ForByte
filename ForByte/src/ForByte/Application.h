@@ -7,6 +7,7 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 
+#include "ForByte/ImGui/ImGuiLayer.h"
 
 namespace ForByte {
 
@@ -29,6 +30,7 @@ namespace ForByte {
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:

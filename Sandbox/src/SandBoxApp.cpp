@@ -1,5 +1,7 @@
 #include <ForByte.h>
 
+#include "imgui/imgui.h"
+
 class ExampleLayer : public ForByte::Layer
 {
 public:
@@ -14,6 +16,13 @@ public:
 			FB_TRACE("Tab key is pressed (poll)!");
 		}
 	}
+
+	/*virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Window");
+		ImGui::Text("Texto xddd");
+		ImGui::End();
+	}*/
 
 	void OnEvent(ForByte::Event& event) override
 	{
@@ -33,7 +42,6 @@ public:
 	SandBox() 
 	{
 		PushLayer(new ExampleLayer());
-		PushLayer(new ForByte::ImGuiLayer());
 	}
 	~SandBox() 
 	{
