@@ -1,11 +1,15 @@
 #pragma once
 
 #ifdef FB_PLATFORM_WINDOWS
+#if FB_DYNAMIC_LINK
 	#ifdef FB_BUILD_DLL
 		#define FORBYTE_API __declspec(dllexport)
 	#else
 		#define FORBYTE_API __declspec(dllimport)
 	#endif // FB_BUILD_DLL
+#else
+	#define FORBYTE_API
+#endif
 #else
 	#error ForByte only supports Windows!
 #endif // FB_PLATFORM_WINDOWS

@@ -24,9 +24,10 @@ include "ForByte/vendor/imgui"
 
 project "ForByte"
     location "ForByte"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
-    staticruntime "off"
+    cppdialect "C++17"
+    staticruntime "on"
     
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -40,6 +41,12 @@ project "ForByte"
         "%{prj.name}/src/**.cpp",
         "%{prj.name}/vendor/glm/glm/**.hpp",
         "%{prj.name}/vendor/glm/glm/**.inl"
+    }
+
+    defines 
+    {
+        "_CRT_SECURE_NO_WARNINGS",
+        "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
     }
 
     includedirs
@@ -61,7 +68,6 @@ project "ForByte"
     }
 
     filter "system:windows"
-        cppdialect "C++17"
         systemversion "latest"
         
         defines
@@ -71,31 +77,27 @@ project "ForByte"
              "GLFW_INCLUDE_NONE"
         }
 
-        postbuildcommands
-        {
-            ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
-        }
-
      filter "configurations:Debug"
          defines "FB_DEBUG"
          runtime "Debug"
-         symbols "On"
+         symbols "on"
 
      filter "configurations:Release"
          defines "FB_RELEASE"
          runtime "Release"
-         optimize "On"
+         optimize "on"
 
      filter "configurations:Dist"
          defines "FB_DIST"
          runtime "Release"
-         optimize "On"
+         optimize "on"
 
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
-    staticruntime "off"
+    cppdialect "C++17"
+    staticruntime "on"
     
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -120,25 +122,25 @@ project "Sandbox"
     }
 
     filter "system:windows"
-        cppdialect "C++17"
         systemversion "latest"
         
         defines
         {
-             "FB_PLATFORM_WINDOWS"
+             "FB_PLATFORM_WINDOWS",
+             "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
         }
 
      filter "configurations:Debug"
          defines "FB_DEBUG"
          runtime "Debug"
-         symbols "On"
+         symbols "on"
 
      filter "configurations:Release"
          defines "FB_RELEASE"
          runtime "Release"
-         optimize "On"
+         optimize "on"
 
      filter "configurations:Dist"
          defines "FB_DIST"
          runtime "Release"
-         optimize "On"
+         optimize "on"

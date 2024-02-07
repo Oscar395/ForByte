@@ -17,12 +17,12 @@ public:
 		}
 	}
 
-	/*virtual void OnImGuiRender() override
+	virtual void OnImGuiRender() override
 	{
 		ImGui::Begin("Window");
 		ImGui::Text("Texto xddd");
 		ImGui::End();
-	}*/
+	}
 
 	void OnEvent(ForByte::Event& event) override
 	{
