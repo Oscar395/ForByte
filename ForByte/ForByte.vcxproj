@@ -158,7 +158,9 @@
     <ClInclude Include="src\ForByte\LayerStack.h" />
     <ClInclude Include="src\ForByte\Log.h" />
     <ClInclude Include="src\ForByte\MouseButtonCodes.h" />
+    <ClInclude Include="src\ForByte\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\ForByte\Window.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\fbpch.h" />
@@ -585,6 +587,7 @@
     <ClCompile Include="src\ForByte\Layer.cpp" />
     <ClCompile Include="src\ForByte\LayerStack.cpp" />
     <ClCompile Include="src\ForByte\Log.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\fbpch.cpp">
