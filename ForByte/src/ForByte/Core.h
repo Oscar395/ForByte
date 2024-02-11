@@ -14,13 +14,13 @@
 	#error ForByte only supports Windows!
 #endif // FB_PLATFORM_WINDOWS
 
-//#ifdef FB_DEBUG
-//	#define FB_ENABLE_ASSERTS
-//#endif
+#ifdef FB_DEBUG
+	#define FB_ENABLE_ASSERTS
+#endif
 
 #ifdef FB_ENABLE_ASSERTS
-	#define FB_ASSERT(x, ...) {if(!(x)) { FB_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debug_break(); } }
-	#define FB_CORE_ASSERT(x, ...) {if(!(x)) { FB_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debug_break(); } }
+	#define FB_ASSERT(x, ...) {if(!(x)) { FB_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define FB_CORE_ASSERT(x, ...) {if(!(x)) { FB_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else
 	#define FB_ASSERT(x, ...)
 	#define FB_CORE_ASSERT(x, ...)
