@@ -32,7 +32,7 @@ public:
 			ForByte::KeyPressedEvent& e = (ForByte::KeyPressedEvent&)event;
 			if (e.GetKeyCode() == FB_KEY_TAB)
 				FB_TRACE("Tab key is pressed (event)!");
-			FB_TRACE("{0}", (char)e.GetKeyCode());
+			//FB_TRACE("{0}", (char)e.GetKeyCode());
 		}
 	}
 };

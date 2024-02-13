@@ -13,6 +13,8 @@
 #include "ForByte/Renderer/Buffer.h"
 #include "ForByte/Renderer/VertexArray.h"
 
+#include "ForByte/Renderer/OrthographicCamera.h"
+
 namespace ForByte {
 
 	class FORBYTE_API Application
@@ -43,6 +45,8 @@ namespace ForByte {
 
 		std::shared_ptr<Shader> m_BlueShader;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographicCamera m_Camera;
 	private:
 		static Application* s_Instance;
 	};

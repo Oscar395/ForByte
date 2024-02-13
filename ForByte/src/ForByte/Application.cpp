@@ -7,12 +7,15 @@
 
 #include "Input.h"
 
+#include "KeyCodes.h"
+
 namespace ForByte {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application() 
+		: m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
 	{
 		FB_CORE_ASSERT(!s_Instance, "Application already exits!");
 		s_Instance = this;
@@ -72,6 +75,8 @@ namespace ForByte {
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 
+            uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 			out vec4 v_Color;
 
@@ -79,7 +84,7 @@ namespace ForByte {
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
         )";
 
@@ -105,12 +110,14 @@ namespace ForByte {
 			
 			layout(location = 0) in vec3 a_Position;
 
+            uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
         )";
 
@@ -151,6 +158,37 @@ namespace ForByte {
 		EventDispatcher dispatcher(e);
 		dispatcher.Distpatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
+		if (e.GetEventType() == ForByte::EventType::KeyPressed)
+		{
+			ForByte::KeyPressedEvent& ev = (ForByte::KeyPressedEvent&)e;
+			if (ev.GetKeyCode() == FB_KEY_A) {
+				glm::vec3 pos = m_Camera.GetPosition();
+				m_Camera.SetPosition(glm::vec3(pos.x + 0.02f, pos.y, pos.z));
+			}
+			if (ev.GetKeyCode() == FB_KEY_D) {
+				glm::vec3 pos = m_Camera.GetPosition();
+				m_Camera.SetPosition(glm::vec3(pos.x - 0.02f, pos.y, pos.z));
+			}
+			if (ev.GetKeyCode() == FB_KEY_S) {
+				glm::vec3 pos = m_Camera.GetPosition();
+				m_Camera.SetPosition(glm::vec3(pos.x, pos.y + 0.02f, pos.z));
+			}
+			if (ev.GetKeyCode() == FB_KEY_W) {
+				glm::vec3 pos = m_Camera.GetPosition();
+				m_Camera.SetPosition(glm::vec3(pos.x, pos.y - 0.02f, pos.z));
+			}
+
+			if (ev.GetKeyCode() == FB_KEY_UP) {
+				float rot = m_Camera.GetRotation();
+				m_Camera.SetRotation(rot + 2.0f);
+			}
+
+			if (ev.GetKeyCode() == FB_KEY_DOWN) {
+				float rot = m_Camera.GetRotation();
+				m_Camera.SetRotation(rot - 2.0f);
+			}
+		}
+
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
 			(*--it)->OnEvent(e);
 			if (e.m_Handled)
@@ -164,13 +202,12 @@ namespace ForByte {
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 			RenderCommand::Clear();
 
-			Renderer::BeginScene();
+			//m_Camera.SetPosition({ 0.5, 0.5f, 0.0f });
 
-			m_BlueShader->Bind();
-			Renderer::Submit(m_SquareVA);
+			Renderer::BeginScene(m_Camera);
 
-			m_Shader->Bind();
-			Renderer::Submit(m_VertexArray);
+			Renderer::Submit(m_BlueShader, m_SquareVA);
+			Renderer::Submit(m_Shader, m_VertexArray);
 
 			Renderer::EndScene();
 
