@@ -6,35 +6,176 @@ class ExampleLayer : public ForByte::Layer
 {
 public:
 	ExampleLayer() 
-		: Layer("Example")
+		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
 	{
+		m_VertexArray.reset(ForByte::VertexArray::Create());
+
+		float vertices[3 * 7] = {
+			-0.5f, -0.5f, 0.0f, 0.1f, 0.8f, 0.8f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 0.0f, 0.2f, 0.8f, 1.0f,
+			 0.0f, 0.5f,  0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+		};
+
+		std::shared_ptr<ForByte::VertexBuffer> vertexBuffer;
+		vertexBuffer.reset(ForByte::VertexBuffer::Create(vertices, sizeof(vertices)));
+
+		ForByte::BufferLayout layout = {
+			{ ForByte::ShaderDataType::Float3, "a_Position" },
+			{ ForByte::ShaderDataType::Float4, "a_Color" }
+		};
+		vertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
+
+		uint32_t indices[3] = { 0, 1, 2 };
+		std::shared_ptr<ForByte::IndexBuffer> indexBuffer;
+		indexBuffer.reset(ForByte::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		m_VertexArray->SetIndexBuffer(indexBuffer);
+
+		float squareVertices[3 * 4] = {
+			-0.75f, -0.75f, 0.0f,
+			 0.75f, -0.75f, 0.0f,
+			 0.75f,  0.75f, 0.0f,
+			-0.75f,  0.75f, 0.0f
+		};
+
+		m_SquareVA.reset(ForByte::VertexArray::Create());
+		std::shared_ptr<ForByte::VertexBuffer> squareVB;
+		squareVB.reset(ForByte::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVB->SetLayout({
+			{ ForByte::ShaderDataType::Float3, "a_Position" }
+			});
+		m_SquareVA->AddVertexBuffer(squareVB);
+
+		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		std::shared_ptr<ForByte::IndexBuffer> squareIB;
+		squareIB.reset(ForByte::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		m_SquareVA->SetIndexBuffer(squareIB);
+
+		std::string vertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec4 a_Color;
+
+            uniform mat4 u_ViewProjection;
+
+			out vec3 v_Position;
+			out vec4 v_Color;
+
+			void main()
+			{
+				v_Position = a_Position;
+				v_Color = a_Color;
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+			}
+        )";
+
+		std::string fragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec3 v_Position;
+			in vec4 v_Color;
+
+			void main()
+			{
+				color = vec4(v_Position * 0.5 + 0.5, 1.0);
+				color = v_Color;
+			}
+        )";
+
+		m_Shader.reset(new ForByte::Shader(vertexSrc, fragmentSrc));
+
+		std::string blueShaderVertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+
+            uniform mat4 u_ViewProjection;
+
+			out vec3 v_Position;
+
+			void main()
+			{
+				v_Position = a_Position;
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+			}
+        )";
+
+		std::string blueShaderFragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec3 v_Position;
+
+			void main()
+			{
+				color = vec4(0.2, 0.3, 0.8, 1.0);
+			}
+        )";
+
+		m_BlueShader.reset(new ForByte::Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
 	}
 
-	void OnUpdate() override
+	void OnUpdate(ForByte::Timestep ts) override
 	{
-		if (ForByte::Input::IsKeyPressed(FB_KEY_TAB)) {
-			FB_TRACE("Tab key is pressed (poll)!");
-		}
+		if (ForByte::Input::IsKeyPressed(FB_KEY_LEFT))
+			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
+		else if (ForByte::Input::IsKeyPressed(FB_KEY_RIGHT))
+			m_CameraPosition.x += m_CameraMoveSpeed * ts;
+
+		if (ForByte::Input::IsKeyPressed(FB_KEY_UP))
+			m_CameraPosition.y += m_CameraMoveSpeed * ts;
+		else if (ForByte::Input::IsKeyPressed(FB_KEY_DOWN))
+			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
+
+		if (ForByte::Input::IsKeyPressed(FB_KEY_A))
+			m_CameraRotation += m_CameraRotationSpeed * ts;
+
+		if (ForByte::Input::IsKeyPressed(FB_KEY_D))
+			m_CameraRotation -= m_CameraRotationSpeed * ts;
+
+		ForByte::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		ForByte::RenderCommand::Clear();
+
+		m_Camera.SetPosition(m_CameraPosition);
+		m_Camera.SetRotation(m_CameraRotation);
+
+		ForByte::Renderer::BeginScene(m_Camera);
+
+		ForByte::Renderer::Submit(m_BlueShader, m_SquareVA);
+		ForByte::Renderer::Submit(m_Shader, m_VertexArray);
+
+		ForByte::Renderer::EndScene();
+
 	}
 
 	virtual void OnImGuiRender() override
 	{
-		ImGui::Begin("Window");
-		ImGui::Text("Texto xddd");
-		ImGui::End();
 	}
 
 	void OnEvent(ForByte::Event& event) override
 	{
-		// FB_TRACE("{0}", event);
-		if (event.GetEventType() == ForByte::EventType::KeyPressed)
-		{
-			ForByte::KeyPressedEvent& e = (ForByte::KeyPressedEvent&)event;
-			if (e.GetKeyCode() == FB_KEY_TAB)
-				FB_TRACE("Tab key is pressed (event)!");
-			//FB_TRACE("{0}", (char)e.GetKeyCode());
-		}
 	}
+
+	bool OnKeyPressedEvent(ForByte::KeyPressedEvent& event)
+	{
+	}
+private:
+	std::shared_ptr<ForByte::Shader> m_Shader;
+	std::shared_ptr<ForByte::VertexArray> m_VertexArray;
+
+	std::shared_ptr<ForByte::Shader> m_BlueShader;
+	std::shared_ptr<ForByte::VertexArray> m_SquareVA;
+
+	ForByte::OrthographicCamera m_Camera;
+	glm::vec3 m_CameraPosition;
+	float m_CameraMoveSpeed = 5.0f;
+
+	float m_CameraRotation = 0.0f;
+	float m_CameraRotationSpeed = 180.0f;
 };
 
 class SandBox : public ForByte::Application {

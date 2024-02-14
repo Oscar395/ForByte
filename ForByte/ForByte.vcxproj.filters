@@ -1356,6 +1356,7 @@
     <ClInclude Include="src\ForByte\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\ForByte\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\ForByte\Core\Timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ForByte\Application.cpp">

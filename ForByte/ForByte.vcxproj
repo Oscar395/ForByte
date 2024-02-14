@@ -146,6 +146,7 @@
     <ClInclude Include="src\ForByte.h" />
     <ClInclude Include="src\ForByte\Application.h" />
     <ClInclude Include="src\ForByte\Core.h" />
+    <ClInclude Include="src\ForByte\Core\Timestep.h" />
     <ClInclude Include="src\ForByte\EntryPoint.h" />
     <ClInclude Include="src\ForByte\Events\ApplicationEvent.h" />
     <ClInclude Include="src\ForByte\Events\Event.h" />

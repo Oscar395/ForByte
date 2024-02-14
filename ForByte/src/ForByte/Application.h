@@ -9,15 +9,11 @@
 
 #include "ForByte/ImGui/ImGuiLayer.h"
 
-#include "ForByte/Renderer/Shader.h"
-#include "ForByte/Renderer/Buffer.h"
-#include "ForByte/Renderer/VertexArray.h"
-
-#include "ForByte/Renderer/OrthographicCamera.h"
+#include "ForByte/Core/Timestep.h"
 
 namespace ForByte {
 
-	class FORBYTE_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -34,19 +30,12 @@ namespace ForByte {
 		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
-
+	private:
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-
-		std::shared_ptr<Shader> m_BlueShader;
-		std::shared_ptr<VertexArray> m_SquareVA;
-
-		OrthographicCamera m_Camera;
+		float m_LastFrameTime = 0.0f;
 	private:
 		static Application* s_Instance;
 	};
