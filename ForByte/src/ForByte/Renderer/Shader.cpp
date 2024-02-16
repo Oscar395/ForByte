@@ -127,6 +127,13 @@ namespace ForByte {
 	{
 		glUseProgram(0);
 	}
+
+	void Shader::UpdloadUniformFloat4(const std::string& name, const glm::vec4& values)
+	{
+		GLint Location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform4f(Location, values.x, values.y, values.z, values.w);
+	}
+
 	void Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix)
 	{
 		GLint Location = glGetUniformLocation(m_RendererID, name.c_str());
