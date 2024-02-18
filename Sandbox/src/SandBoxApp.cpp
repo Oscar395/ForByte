@@ -21,7 +21,7 @@ public:
 			 0.0f, 0.5f,  0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		std::shared_ptr<ForByte::VertexBuffer> vertexBuffer;
+		ForByte::Ref<ForByte::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(ForByte::VertexBuffer::Create(vertices, sizeof(vertices)));
 
 		ForByte::BufferLayout layout = {
@@ -32,7 +32,7 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<ForByte::IndexBuffer> indexBuffer;
+		ForByte::Ref<ForByte::IndexBuffer> indexBuffer;
 		indexBuffer.reset(ForByte::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
@@ -44,7 +44,7 @@ public:
 		};
 
 		m_SquareVA.reset(ForByte::VertexArray::Create());
-		std::shared_ptr<ForByte::VertexBuffer> squareVB;
+		ForByte::Ref<ForByte::VertexBuffer> squareVB;
 		squareVB.reset(ForByte::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
 			{ ForByte::ShaderDataType::Float3, "a_Position" }
@@ -52,7 +52,7 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<ForByte::IndexBuffer> squareIB;
+		ForByte::Ref<ForByte::IndexBuffer> squareIB;
 		squareIB.reset(ForByte::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
@@ -191,11 +191,11 @@ public:
 	{
 	}
 private:
-	std::shared_ptr<ForByte::Shader> m_Shader;
-	std::shared_ptr<ForByte::VertexArray> m_VertexArray;
+	ForByte::Ref<ForByte::Shader> m_Shader;
+	ForByte::Ref<ForByte::VertexArray> m_VertexArray;
 
-	std::shared_ptr<ForByte::Shader> m_FlatColorShader;
-	std::shared_ptr<ForByte::VertexArray> m_SquareVA;
+	ForByte::Ref<ForByte::Shader> m_FlatColorShader;
+	ForByte::Ref<ForByte::VertexArray> m_SquareVA;
 
 	ForByte::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
