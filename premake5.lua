@@ -17,6 +17,7 @@ IncludeDir["GLFW"] = "ForByte/vendor/GLFW/include"
 IncludeDir["Glad"] = "ForByte/vendor/Glad/include"
 IncludeDir["ImGui"] = "ForByte/vendor/imgui"
 IncludeDir["glm"] = "ForByte/vendor/glm"
+IncludeDir["stb_image"] = "ForByte/vendor/stb_image"
 
 include "ForByte/vendor/GLFW"
 include "ForByte/vendor/Glad"
@@ -39,6 +40,8 @@ project "ForByte"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/stb_image/**.h",
+        "%{prj.name}/vendor/stb_image/**.cpp",
         "%{prj.name}/vendor/glm/glm/**.hpp",
         "%{prj.name}/vendor/glm/glm/**.inl"
     }
@@ -56,7 +59,8 @@ project "ForByte"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.stb_image}"
     }
 
     links 

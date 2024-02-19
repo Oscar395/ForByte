@@ -36,18 +36,20 @@ public:
 		indexBuffer.reset(ForByte::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		m_SquareVA.reset(ForByte::VertexArray::Create());
+
 		ForByte::Ref<ForByte::VertexBuffer> squareVB;
 		squareVB.reset(ForByte::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
-			{ ForByte::ShaderDataType::Float3, "a_Position" }
+			{ ForByte::ShaderDataType::Float3, "a_Position"},
+			{ ForByte::ShaderDataType::Float2, "a_TexCoord" }
 			});
 		m_SquareVA->AddVertexBuffer(squareVB);
 
@@ -126,6 +128,46 @@ public:
         )";
 
 		m_FlatColorShader.reset(ForByte::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+
+		std::string textureShaderVertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+
+            uniform mat4 u_ViewProjection;
+            uniform mat4 u_Transform;
+
+			out vec2 v_TexCoord;
+
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+			}
+        )";
+
+		std::string textureShaderFragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			uniform sampler2D u_Texture;
+
+			in vec2 v_TexCoord;
+
+			void main()
+			{
+				color = texture(u_Texture, v_TexCoord);
+			}
+        )";
+
+		m_TextureShader.reset(ForByte::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
+		m_Texture = ForByte::Texture2D::Create("assets/textures/Checkerboard.png");
+
+		std::dynamic_pointer_cast<ForByte::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<ForByte::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(ForByte::Timestep ts) override
@@ -167,8 +209,10 @@ public:
 				ForByte::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 			}
 		}
-	
-		ForByte::Renderer::Submit(m_Shader, m_VertexArray);
+
+		m_Texture->Bind();
+		ForByte::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		//ForByte::Renderer::Submit(m_Shader, m_VertexArray);
 
 		ForByte::Renderer::EndScene();
 
@@ -194,8 +238,10 @@ private:
 	ForByte::Ref<ForByte::Shader> m_Shader;
 	ForByte::Ref<ForByte::VertexArray> m_VertexArray;
 
-	ForByte::Ref<ForByte::Shader> m_FlatColorShader;
+	ForByte::Ref<ForByte::Shader> m_FlatColorShader, m_TextureShader;
 	ForByte::Ref<ForByte::VertexArray> m_SquareVA;
+
+	ForByte::Ref<ForByte::Texture2D> m_Texture;
 
 	ForByte::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
