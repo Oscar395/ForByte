@@ -93,7 +93,7 @@ public:
 			}
         )";
 
-		m_Shader.reset(ForByte::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader = ForByte::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
 
 		std::string flatColorShaderVertexSrc = R"(
 			#version 330 core
@@ -127,15 +127,15 @@ public:
 			}
         )";
 
-		m_FlatColorShader.reset(ForByte::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+		m_FlatColorShader = ForByte::Shader::Create("FlatColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
 
-		m_TextureShader.reset(ForByte::Shader::Create("assets/shaders/Texture.glsl"));
+		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
 		m_Texture = ForByte::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_ChernologoTexture = ForByte::Texture2D::Create("assets/textures/ChernoLogo.png");
 
-		std::dynamic_pointer_cast<ForByte::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<ForByte::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<ForByte::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<ForByte::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(ForByte::Timestep ts) override
@@ -178,11 +178,13 @@ public:
 			}
 		}
 
+		auto textureShader = m_ShaderLibrary.Get("Texture");
+
 		m_Texture->Bind();
-		ForByte::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		ForByte::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		m_ChernologoTexture->Bind();
-		ForByte::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		ForByte::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		//ForByte::Renderer::Submit(m_Shader, m_VertexArray);
 
 		ForByte::Renderer::EndScene();
@@ -206,10 +208,11 @@ public:
 	{
 	}
 private:
+	ForByte::ShaderLibrary m_ShaderLibrary;
 	ForByte::Ref<ForByte::Shader> m_Shader;
 	ForByte::Ref<ForByte::VertexArray> m_VertexArray;
 
-	ForByte::Ref<ForByte::Shader> m_FlatColorShader, m_TextureShader;
+	ForByte::Ref<ForByte::Shader> m_FlatColorShader;
 	ForByte::Ref<ForByte::VertexArray> m_SquareVA;
 
 	ForByte::Ref<ForByte::Texture2D> m_Texture, m_ChernologoTexture;
