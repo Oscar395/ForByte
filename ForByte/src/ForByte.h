@@ -11,6 +11,7 @@
 #include "ForByte/Input.h"
 #include "ForByte/MouseButtonCodes.h"
 #include "ForByte/KeyCodes.h"
+#include "ForByte/OrthographicCameraController.h"
 
 #include "ForByte/ImGui/ImGuiLayer.h"
 
