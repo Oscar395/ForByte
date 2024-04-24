@@ -191,9 +191,7 @@ public:
 		m_CameraController.OnEvent(e);
 	}
 
-	bool OnKeyPressedEvent(ForByte::KeyPressedEvent& event)
-	{
-	}
+
 private:
 	ForByte::ShaderLibrary m_ShaderLibrary;
 	ForByte::Ref<ForByte::Shader> m_Shader;
