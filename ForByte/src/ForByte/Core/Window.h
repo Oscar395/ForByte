@@ -2,7 +2,7 @@
 
 #include "fbpch.h"
 
-#include "ForByte/Core.h"
+#include "ForByte/Core/Core.h"
 #include "ForByte/Events/Event.h"
 
 namespace ForByte {

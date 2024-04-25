@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "ForByte/Log.h"
+#include "ForByte/Core/Log.h"
 
 #ifdef FB_PLATFORM_WINDOWS
 	#include <Windows.h>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ForByte/Core.h"
+#include "ForByte/Core/Core.h"
 
 namespace ForByte {
 	class FORBYTE_API Input 

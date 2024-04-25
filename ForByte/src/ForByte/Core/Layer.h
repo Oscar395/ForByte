@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ForByte/Core.h"
+#include "ForByte/Core/Core.h"
 #include "ForByte/Core/Timestep.h"
 #include "ForByte/Events/Event.h"
 

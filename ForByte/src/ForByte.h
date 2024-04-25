@@ -2,16 +2,16 @@
 
 // For use by ForByte applications
 
-#include "ForByte/Application.h"
-#include "ForByte/Layer.h"
-#include "ForByte/Log.h"
+#include "ForByte/Core/Application.h"
+#include "ForByte/Core/Layer.h"
+#include "ForByte/Core/Log.h"
 
 #include "ForByte/Core/Timestep.h"
 
-#include "ForByte/Input.h"
-#include "ForByte/MouseButtonCodes.h"
-#include "ForByte/KeyCodes.h"
-#include "ForByte/OrthographicCameraController.h"
+#include "ForByte/Core/Input.h"
+#include "ForByte/Core/MouseButtonCodes.h"
+#include "ForByte/Core/KeyCodes.h"
+#include "ForByte/Renderer/OrthographicCameraController.h"
 
 #include "ForByte/ImGui/ImGuiLayer.h"
 
@@ -29,5 +29,5 @@
 // --------------------------------------------
 
 // ---Entry Point------------------------------
-#include "ForByte/EntryPoint.h"
+#include "ForByte/Core/EntryPoint.h"
 // --------------------------------------------

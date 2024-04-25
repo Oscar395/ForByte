@@ -1,7 +1,7 @@
 #include "fbpch.h"
 #include "WindowsInput.h"
 
-#include "ForByte/Application.h"
+#include "ForByte/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace ForByte {

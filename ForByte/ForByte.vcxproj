@@ -144,32 +144,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\ForByte.h" />
-    <ClInclude Include="src\ForByte\Application.h" />
-    <ClInclude Include="src\ForByte\Core.h" />
+    <ClInclude Include="src\ForByte\Core\Application.h" />
+    <ClInclude Include="src\ForByte\Core\Core.h" />
+    <ClInclude Include="src\ForByte\Core\EntryPoint.h" />
+    <ClInclude Include="src\ForByte\Core\Input.h" />
+    <ClInclude Include="src\ForByte\Core\KeyCodes.h" />
+    <ClInclude Include="src\ForByte\Core\Layer.h" />
+    <ClInclude Include="src\ForByte\Core\LayerStack.h" />
+    <ClInclude Include="src\ForByte\Core\Log.h" />
+    <ClInclude Include="src\ForByte\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\ForByte\Core\Timestep.h" />
-    <ClInclude Include="src\ForByte\EntryPoint.h" />
+    <ClInclude Include="src\ForByte\Core\Window.h" />
     <ClInclude Include="src\ForByte\Events\ApplicationEvent.h" />
     <ClInclude Include="src\ForByte\Events\Event.h" />
     <ClInclude Include="src\ForByte\Events\KeyEvent.h" />
     <ClInclude Include="src\ForByte\Events\MouseEvent.h" />
     <ClInclude Include="src\ForByte\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\ForByte\Input.h" />
-    <ClInclude Include="src\ForByte\KeyCodes.h" />
-    <ClInclude Include="src\ForByte\Layer.h" />
-    <ClInclude Include="src\ForByte\LayerStack.h" />
-    <ClInclude Include="src\ForByte\Log.h" />
-    <ClInclude Include="src\ForByte\MouseButtonCodes.h" />
-    <ClInclude Include="src\ForByte\OrthographicCameraController.h" />
     <ClInclude Include="src\ForByte\Renderer\Buffer.h" />
     <ClInclude Include="src\ForByte\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\ForByte\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\ForByte\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\ForByte\Renderer\RenderCommand.h" />
     <ClInclude Include="src\ForByte\Renderer\Renderer.h" />
     <ClInclude Include="src\ForByte\Renderer\RendererAPI.h" />
     <ClInclude Include="src\ForByte\Renderer\Shader.h" />
     <ClInclude Include="src\ForByte\Renderer\Texture.h" />
     <ClInclude Include="src\ForByte\Renderer\VertexArray.h" />
-    <ClInclude Include="src\ForByte\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -597,15 +597,15 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ForByte\Application.cpp" />
+    <ClCompile Include="src\ForByte\Core\Application.cpp" />
+    <ClCompile Include="src\ForByte\Core\Layer.cpp" />
+    <ClCompile Include="src\ForByte\Core\LayerStack.cpp" />
+    <ClCompile Include="src\ForByte\Core\Log.cpp" />
     <ClCompile Include="src\ForByte\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\ForByte\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\ForByte\Layer.cpp" />
-    <ClCompile Include="src\ForByte\LayerStack.cpp" />
-    <ClCompile Include="src\ForByte\Log.cpp" />
-    <ClCompile Include="src\ForByte\OrthographicCameraController.cpp" />
     <ClCompile Include="src\ForByte\Renderer\Buffer.cpp" />
     <ClCompile Include="src\ForByte\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\ForByte\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\ForByte\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\ForByte\Renderer\Renderer.cpp" />
     <ClCompile Include="src\ForByte\Renderer\RendererAPI.cpp" />

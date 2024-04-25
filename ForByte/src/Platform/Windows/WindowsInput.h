@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ForByte/Input.h"
+#include "ForByte/Core/Input.h"
 
 namespace ForByte {
 

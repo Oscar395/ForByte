@@ -1,8 +1,8 @@
 #include "fbpch.h"
 #include "OrthographicCameraController.h"
 
-#include "ForByte/Input.h"
-#include "ForByte/KeyCodes.h"
+#include "ForByte/Core/Input.h"
+#include "ForByte/Core/KeyCodes.h"
 
 namespace ForByte {
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)

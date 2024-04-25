@@ -3,9 +3,9 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "ForByte/LayerStack.h"
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
+#include "ForByte/Core/LayerStack.h"
+#include "ForByte/Events/Event.h"
+#include "ForByte/Events/ApplicationEvent.h"
 
 #include "ForByte/ImGui/ImGuiLayer.h"
 
