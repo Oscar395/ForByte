@@ -1,4 +1,5 @@
 #include <ForByte.h>
+#include <ForByte/Core/EntryPoint.h>
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
@@ -7,13 +8,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Sandbox2D.h"
+
 class ExampleLayer : public ForByte::Layer
 {
 public:
 	ExampleLayer() 
 		: Layer("Example"), m_CameraController(1280.0f / 720.0f)
 	{
-		m_VertexArray.reset(ForByte::VertexArray::Create());
+		m_VertexArray = ForByte::VertexArray::Create();
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.1f, 0.8f, 0.8f, 1.0f,
@@ -43,7 +46,7 @@ public:
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		m_SquareVA.reset(ForByte::VertexArray::Create());
+		m_SquareVA  = ForByte::VertexArray::Create();
 
 		ForByte::Ref<ForByte::VertexBuffer> squareVB;
 		squareVB.reset(ForByte::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
@@ -180,9 +183,7 @@ public:
 	virtual void OnImGuiRender() override
 	{
 		ImGui::Begin("Settings");
-
 		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
-
 		ImGui::End();
 	}
 
@@ -210,7 +211,8 @@ class SandBox : public ForByte::Application {
 public:
 	SandBox() 
 	{
-		PushLayer(new ExampleLayer());
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 	~SandBox() 
 	{

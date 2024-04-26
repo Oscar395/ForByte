@@ -27,7 +27,3 @@
 #include "ForByte/Renderer/OrthographicCamera.h"
 
 // --------------------------------------------
-
-// ---Entry Point------------------------------
-#include "ForByte/Core/EntryPoint.h"
-// --------------------------------------------
