@@ -17,6 +17,7 @@
 
 // ---Renderer---------------------------------
 #include "ForByte/Renderer/Renderer.h"
+#include "ForByte/Renderer/Renderer2D.h"
 #include "ForByte/Renderer/RenderCommand.h"
 
 #include "ForByte/Renderer/Buffer.h"
