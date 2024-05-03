@@ -16,7 +16,11 @@ public:
 	void OnEvent(ForByte::Event& e) override;
 private:
 	ForByte::OrthographicCameraController m_CameraController;
+
+	//Temp
 	ForByte::Ref<ForByte::VertexArray> m_SquareVA;
 	ForByte::Ref<ForByte::Shader> m_FlatColorShader;
+
+	ForByte::Ref<ForByte::Texture2D> m_CheckerboardTexture;
 	glm::vec4 m_SquareColor = { 0.1f, 0.3f, 0.8f , 1.0f};
 };
