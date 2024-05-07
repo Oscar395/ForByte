@@ -146,6 +146,7 @@
     <ClInclude Include="src\ForByte.h" />
     <ClInclude Include="src\ForByte\Core\Application.h" />
     <ClInclude Include="src\ForByte\Core\Core.h" />
+    <ClInclude Include="src\ForByte\Debug\Instrumentor.h" />
     <ClInclude Include="src\ForByte\Core\EntryPoint.h" />
     <ClInclude Include="src\ForByte\Core\Input.h" />
     <ClInclude Include="src\ForByte\Core\KeyCodes.h" />

@@ -15,6 +15,8 @@
 
 #include "ForByte/Core/Log.h"
 
+#include "ForByte/Debug/Instrumentor.h"
+
 #ifdef FB_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif
