@@ -25,6 +25,8 @@ namespace ForByte {
 
 	void ImGuiLayer::OnAttach() 
 	{
+		FB_PROFILE_FUNCTION();
+
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -50,6 +52,8 @@ namespace ForByte {
 
 	void ImGuiLayer::OnDetach() 
 	{
+		FB_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -57,6 +61,8 @@ namespace ForByte {
 
 	void ImGuiLayer::Begin() 
 	{
+		FB_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -64,6 +70,8 @@ namespace ForByte {
 
 	void ImGuiLayer::End()
 	{
+		FB_PROFILE_FUNCTION();
+
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());

@@ -8,7 +8,8 @@
 
 namespace ForByte {
 
-	Ref<VertexArray> VertexArray::Create() {
+	Ref<VertexArray> VertexArray::Create() 
+	{
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None:   FB_CORE_ERROR("RendererAPI::None is currently not supported!"); return nullptr;

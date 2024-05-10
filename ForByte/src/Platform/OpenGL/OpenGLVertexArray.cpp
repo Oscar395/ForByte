@@ -28,24 +28,34 @@ namespace ForByte {
 
 	OpenGLVertexArray::OpenGLVertexArray() 
 	{
+		FB_PROFILE_FUNCTION();
+
 		glGenVertexArrays(1, &m_RendererID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		FB_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &m_RendererID);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
+		FB_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 	}
 	void OpenGLVertexArray::Unbind() const
 	{
+		FB_PROFILE_FUNCTION();
+
 		glBindVertexArray(0);
 	}
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
+		FB_PROFILE_FUNCTION();
+
 		FB_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has not layout!");
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->Bind();
@@ -68,6 +78,8 @@ namespace ForByte {
 	}
 	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 	{
+		FB_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 		indexBuffer->Bind();
 

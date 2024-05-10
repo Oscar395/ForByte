@@ -1,0 +1,1 @@
+{"otherData": {},"traceEvents":[{"cat":"function","dur":4486,"name":"__cdecl ForByte::OpenGLTexture2D::~OpenGLTexture2D(void)","ph":"X","pid":0,"tid":1035286091,"ts":15764055662},{"cat":"function","dur":83447,"name":"void __cdecl ForByte::WindowsWindow::Shutdown(void)","ph":"X","pid":0,"tid":1035286091,"ts":15764060390}]}

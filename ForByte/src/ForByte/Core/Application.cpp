@@ -14,6 +14,8 @@ namespace ForByte {
 
 	Application::Application() 
 	{
+		FB_PROFILE_FUNCTION();
+
 		FB_CORE_ASSERT(!s_Instance, "Application already exits!");
 		s_Instance = this;
 
@@ -32,18 +34,24 @@ namespace ForByte {
 
 	void Application::PushLayer(Layer* layer)
 	{
+		FB_PROFILE_FUNCTION();
+
 		m_LayerStack.PushLayer(layer);
 		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer)
 	{
+		FB_PROFILE_FUNCTION();
+
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
 
 	void Application::OnEvent(Event& e) 
 	{
+		FB_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Distpatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 		dispatcher.Distpatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
@@ -56,22 +64,32 @@ namespace ForByte {
 	}
 
 	void Application::Run() {
+		FB_PROFILE_FUNCTION();
+
 		while (m_Running)
 		{
+			FB_PROFILE_SCOPE("RunLoop");
+
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
 			if (!m_Minimized)
 			{
-				for (Layer* layer : m_LayerStack)
-					layer->OnUpdate(timestep);
-			}
+				{
+					FB_PROFILE_SCOPE("LayerStack OnUpdate");
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate(timestep);
+				}
+				m_ImGuiLayer->Begin();
+				{
+					FB_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
-			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
-			m_ImGuiLayer->End();
+					for (Layer* layer : m_LayerStack)
+						layer->OnImGuiRender();
+				}
+				m_ImGuiLayer->End();
+			}
 
 			m_Window->OnUpdate();
 		}
@@ -85,6 +103,8 @@ namespace ForByte {
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
+		FB_PROFILE_FUNCTION();
+
 		if (e.GetWidth() == 0 || e.GetHeight() == 0)
 		{
 			m_Minimized = true;

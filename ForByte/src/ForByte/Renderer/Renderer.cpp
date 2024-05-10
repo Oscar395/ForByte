@@ -10,6 +10,8 @@ namespace ForByte {
 
 	void Renderer::Init()
 	{
+		FB_PROFILE_FUNCTION();
+
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}
