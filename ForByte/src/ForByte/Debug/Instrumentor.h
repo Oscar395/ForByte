@@ -122,7 +122,7 @@ namespace ForByte {
     };
 }
 
-#define FB_PROFILE 1
+#define FB_PROFILE 0
 #if FB_PROFILE
     #define FB_PROFILE_BEGIN_SESSION(name, filepath) ::ForByte::Instrumentor::Get().BeginSession(name, filepath)
     #define FB_PROFILE_END_SESSION() ::ForByte::Instrumentor::Get().EndSession()
