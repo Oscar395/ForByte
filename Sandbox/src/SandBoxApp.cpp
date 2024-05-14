@@ -24,9 +24,8 @@ public:
 			 0.0f, 0.5f,  0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		ForByte::Ref<ForByte::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(ForByte::VertexBuffer::Create(vertices, sizeof(vertices)));
-
+		ForByte::Ref<ForByte::VertexBuffer> vertexBuffer = ForByte::VertexBuffer::Create(vertices, sizeof(vertices));
+		
 		ForByte::BufferLayout layout = {
 			{ ForByte::ShaderDataType::Float3, "a_Position" },
 			{ ForByte::ShaderDataType::Float4, "a_Color" }
@@ -35,8 +34,7 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0, 1, 2 };
-		ForByte::Ref<ForByte::IndexBuffer> indexBuffer;
-		indexBuffer.reset(ForByte::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		ForByte::Ref<ForByte::IndexBuffer> indexBuffer = ForByte::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		float squareVertices[5 * 4] = {
@@ -48,8 +46,7 @@ public:
 
 		m_SquareVA  = ForByte::VertexArray::Create();
 
-		ForByte::Ref<ForByte::VertexBuffer> squareVB;
-		squareVB.reset(ForByte::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		ForByte::Ref<ForByte::VertexBuffer> squareVB = ForByte::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ ForByte::ShaderDataType::Float3, "a_Position"},
 			{ ForByte::ShaderDataType::Float2, "a_TexCoord" }
@@ -57,8 +54,7 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		ForByte::Ref<ForByte::IndexBuffer> squareIB;
-		squareIB.reset(ForByte::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		ForByte::Ref<ForByte::IndexBuffer> squareIB = ForByte::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		std::string vertexSrc = R"(
