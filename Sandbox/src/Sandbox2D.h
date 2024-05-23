@@ -2,6 +2,8 @@
 
 #include "ForByte.h"
 
+#include "ParticleSystem.h"
+
 class Sandbox2D : public ForByte::Layer
 {
 public:
@@ -24,4 +26,7 @@ private:
 	ForByte::Ref<ForByte::Texture2D> m_CheckerboardTexture;
 
 	glm::vec4 m_SquareColor = { 0.1f, 0.3f, 0.8f , 1.0f};
+
+	ParticleSystem m_ParticleSysten;
+	ParticleProps m_Particle;
 };
