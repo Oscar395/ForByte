@@ -25,6 +25,7 @@ private:
 
 	ForByte::Ref<ForByte::Texture2D> m_CheckerboardTexture;
 	ForByte::Ref<ForByte::Texture2D> m_SpriteSheet;
+	ForByte::Ref<ForByte::SubTexture2D> m_TextureStairs, m_TextureBarrel, m_TextureTree;
 
 	glm::vec4 m_SquareColor = { 0.1f, 0.3f, 0.8f , 1.0f};
 

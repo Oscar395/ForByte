@@ -23,6 +23,7 @@
 #include "ForByte/Renderer/Buffer.h"
 #include "ForByte/Renderer/Shader.h"
 #include "ForByte/Renderer/Texture.h"
+#include "ForByte/Renderer/SubTexture2D.h"
 #include "ForByte/Renderer/VertexArray.h"
 
 #include "ForByte/Renderer/OrthographicCamera.h"

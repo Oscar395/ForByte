@@ -16,6 +16,10 @@ void Sandbox2D::OnAttach()
 	m_CheckerboardTexture = ForByte::Texture2D::Create("assets/textures/Checkerboard.png");
 	m_SpriteSheet = ForByte::Texture2D::Create("assets/game/textures/RPGpack_sheet_2X.png");
 
+	m_TextureStairs = ForByte::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 7, 6 }, { 128, 128 });
+	m_TextureBarrel = ForByte::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 8, 2 }, { 128, 128 });
+	m_TextureTree = ForByte::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 2, 1 }, { 128, 128 }, {1, 2});
+
 	m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
 	m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
 	m_Particle.SizeBegin = 0.5f, m_Particle.SizeVariation = 0.3f, m_Particle.SizeEnd = 0.0f;
@@ -89,7 +93,9 @@ void Sandbox2D::OnUpdate(ForByte::Timestep ts)
 	m_ParticleSysten.OnRender(m_CameraController.GetCamera());
 
 	ForByte::Renderer2D::BeginScene(m_CameraController.GetCamera());
-	ForByte::Renderer2D::DrawQuad({ 0.0f, 0.0f , 0.5f }, { 1.0f, 1.0f }, m_SpriteSheet);
+	ForByte::Renderer2D::DrawQuad({ 0.0f, 0.0f , 0.5f }, { 1.0f, 1.0f }, m_TextureStairs);
+	ForByte::Renderer2D::DrawQuad({ 1.0f, 0.0f , 0.5f }, { 1.0f, 1.0f }, m_TextureBarrel);
+	ForByte::Renderer2D::DrawQuad({ -1.0f, 0.0f , 0.5f }, { 1.0f, 2.0f }, m_TextureTree);
 	ForByte::Renderer2D::EndScene();
 }
 
