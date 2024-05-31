@@ -4,6 +4,24 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+static const uint32_t s_MapWidth = 24;
+static const char* s_MapTiles = 
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+"WWWWWDDDDDDDWWWWWWWWWWWW"
+"WWWDDDDDDDDDDDDDWWWWWWWW"
+"WWWDDDDDDDDDDDDDDDDWWWWW"
+"WWWDDDDDDDDDDDCDDDDDDWWW"
+"WWWDDDDDDDDDDDDDDDDDDWWW"
+"WWDDDDDWWWDDDDDDDDDDDWWW"
+"WWDDDDDWWDDDDDDDDDDDDDWW"
+"WWDDDDDDDDDDDDDDDDDDDDWW"
+"WWDDDDDDDDDDDDDDDDDDDWWW"
+"WWWWDDDDDDDDDDDDDDDDWWWW"
+"WWWWWDDDDDDDDDDDDDWWWWWW"
+"WWWWWWWWWDDDDDWWWWWWWWWW"
+"WWWWWWWWWWWWWWWWWWWWWWWW";
+
+
 Sandbox2D::Sandbox2D()
 	: Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f)
 {
@@ -16,9 +34,15 @@ void Sandbox2D::OnAttach()
 	m_CheckerboardTexture = ForByte::Texture2D::Create("assets/textures/Checkerboard.png");
 	m_SpriteSheet = ForByte::Texture2D::Create("assets/game/textures/RPGpack_sheet_2X.png");
 
-	m_TextureStairs = ForByte::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 7, 6 }, { 128, 128 });
-	m_TextureBarrel = ForByte::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 8, 2 }, { 128, 128 });
+	m_TextureStairs = ForByte::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 0, 11 }, { 128, 128 });
 	m_TextureTree = ForByte::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 2, 1 }, { 128, 128 }, {1, 2});
+	
+	m_MapWidth = s_MapWidth;
+	m_MapHeight = strlen(s_MapTiles) / s_MapWidth;
+
+	m_TextureMap['D'] = ForByte::SubTexture2D::CreateFromCoords(m_SpriteSheet, {6, 11}, {128, 128});
+	m_TextureMap['W'] = ForByte::SubTexture2D::CreateFromCoords(m_SpriteSheet, {11, 11}, {128, 128});
+
 
 	m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
 	m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
@@ -27,6 +51,8 @@ void Sandbox2D::OnAttach()
 	m_Particle.Velocity = { 0.0f, 0.0f };
 	m_Particle.VelocityVariation = { 3.0f, 1.0f };
 	m_Particle.Position = { 0.0f, 0.0f };
+
+	m_CameraController.SetZoomLevel(5.0f);
 }
 
 void Sandbox2D::OnDetach()
@@ -93,9 +119,26 @@ void Sandbox2D::OnUpdate(ForByte::Timestep ts)
 	m_ParticleSysten.OnRender(m_CameraController.GetCamera());
 
 	ForByte::Renderer2D::BeginScene(m_CameraController.GetCamera());
-	ForByte::Renderer2D::DrawQuad({ 0.0f, 0.0f , 0.5f }, { 1.0f, 1.0f }, m_TextureStairs);
+
+	for (uint32_t y = 0; y < m_MapHeight; y++)
+	{
+		for (uint32_t x = 0; x < m_MapWidth; x++)
+		{
+			char tileType = s_MapTiles[x + y * m_MapWidth];
+			ForByte::Ref<ForByte::SubTexture2D> texture;
+
+			if (m_TextureMap.find(tileType) != m_TextureMap.end())
+				texture = m_TextureMap[tileType];
+			else
+				texture = m_TextureStairs;
+
+			ForByte::Renderer2D::DrawQuad({ x - m_MapWidth / 2.0f, m_MapHeight - y - m_MapHeight / 2.0f, 0.5f }, { 1.0f, 1.0f }, texture);
+		}
+	}
+
+	/*ForByte::Renderer2D::DrawQuad({ 0.0f, 0.0f , 0.5f }, { 1.0f, 1.0f }, m_TextureStairs);
 	ForByte::Renderer2D::DrawQuad({ 1.0f, 0.0f , 0.5f }, { 1.0f, 1.0f }, m_TextureBarrel);
-	ForByte::Renderer2D::DrawQuad({ -1.0f, 0.0f , 0.5f }, { 1.0f, 2.0f }, m_TextureTree);
+	ForByte::Renderer2D::DrawQuad({ -1.0f, 0.0f , 0.5f }, { 1.0f, 2.0f }, m_TextureTree);*/
 	ForByte::Renderer2D::EndScene();
 }
 
