@@ -27,6 +27,9 @@ namespace ForByte {
 		void PushOverlay(Layer* layer);
 
 		inline static Application& Get() { return *s_Instance; }
+
+		void Close();
+
 		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
