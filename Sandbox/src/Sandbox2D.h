@@ -2,8 +2,6 @@
 
 #include "ForByte.h"
 
-#include "ParticleSystem.h"
-
 class Sandbox2D : public ForByte::Layer
 {
 public:
@@ -22,7 +20,6 @@ private:
 	//Temp
 	ForByte::Ref<ForByte::VertexArray> m_SquareVA;
 	ForByte::Ref<ForByte::Shader> m_FlatColorShader;
-	ForByte::Ref<ForByte::Framebuffer> m_Framebuffer;
 
 	ForByte::Ref<ForByte::Texture2D> m_CheckerboardTexture;
 

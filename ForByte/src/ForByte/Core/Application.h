@@ -16,7 +16,7 @@ namespace ForByte {
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "ForByte App");
 		virtual ~Application();
 
 		void Run();

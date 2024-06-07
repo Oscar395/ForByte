@@ -146,7 +146,6 @@
     <ClInclude Include="src\ForByte.h" />
     <ClInclude Include="src\ForByte\Core\Application.h" />
     <ClInclude Include="src\ForByte\Core\Core.h" />
-    <ClInclude Include="src\ForByte\Debug\Instrumentor.h" />
     <ClInclude Include="src\ForByte\Core\EntryPoint.h" />
     <ClInclude Include="src\ForByte\Core\Input.h" />
     <ClInclude Include="src\ForByte\Core\KeyCodes.h" />
@@ -156,6 +155,7 @@
     <ClInclude Include="src\ForByte\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\ForByte\Core\Timestep.h" />
     <ClInclude Include="src\ForByte\Core\Window.h" />
+    <ClInclude Include="src\ForByte\Debug\Instrumentor.h" />
     <ClInclude Include="src\ForByte\Events\ApplicationEvent.h" />
     <ClInclude Include="src\ForByte\Events\Event.h" />
     <ClInclude Include="src\ForByte\Events\KeyEvent.h" />
