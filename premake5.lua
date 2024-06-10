@@ -1,6 +1,6 @@
 workspace "ForByte"
     architecture "x64"
-    startproject "Sandbox"
+    startproject "ForByte-Editor"
     
     configurations
     {

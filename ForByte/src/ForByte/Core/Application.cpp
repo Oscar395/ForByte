@@ -60,10 +60,11 @@ namespace ForByte {
 		dispatcher.Distpatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 		dispatcher.Distpatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
 
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
-			(*--it)->OnEvent(e);
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) 
+		{
 			if (e.m_Handled)
 				break;
+			(*--it)->OnEvent(e);
 		}
 	}
 
