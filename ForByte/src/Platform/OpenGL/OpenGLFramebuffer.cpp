@@ -4,6 +4,8 @@
 #include "glad/glad.h"
 
 namespace ForByte {
+	static uint32_t s_MaxFrameBufferSize = 8192;
+
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
 		: m_Specification(spec)
 	{
@@ -24,11 +26,6 @@ namespace ForByte {
 			glDeleteFramebuffers(1, &m_RendererID);
 			glDeleteTextures(1, &m_ColorAttachment);
 			glDeleteRenderbuffers(1, &m_DepthAttachment);
-		}
-
-		if (m_Specification.Width == 0 || m_Specification.Height == 0)
-		{
-			return;
 		}
 
 		glGenFramebuffers(1, &m_RendererID);
@@ -67,6 +64,12 @@ namespace ForByte {
 
 	void OpenGLFramebuffer::Resize(uint32_t width, uint32_t height)
 	{
+		if (width == 0 || height == 0 || height > s_MaxFrameBufferSize)
+		{
+			FB_CORE_WARM("Attempted to resize de framebuffer to {0}, {1}", width, height);
+			return;
+		}
+
 		m_Specification.Width = width;
 		m_Specification.Height = height;
 

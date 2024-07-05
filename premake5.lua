@@ -18,6 +18,7 @@ IncludeDir["Glad"] = "ForByte/vendor/Glad/include"
 IncludeDir["ImGui"] = "ForByte/vendor/imgui"
 IncludeDir["glm"] = "ForByte/vendor/glm"
 IncludeDir["stb_image"] = "ForByte/vendor/stb_image"
+IncludeDir["entt"] = "ForByte/vendor/entt/include"
 
 include "ForByte/vendor/GLFW"
 include "ForByte/vendor/Glad"
@@ -60,7 +61,8 @@ project "ForByte"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.stb_image}"
+        "%{IncludeDir.stb_image}",
+        "%{IncludeDir.entt}"
     }
 
     links 
@@ -117,7 +119,8 @@ project "Sandbox"
         "ForByte/vendor/spdlog/include",
         "ForByte/src",
         "ForByte/vendor",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.entt}"
     }
 
     links

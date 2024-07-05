@@ -171,7 +171,7 @@ namespace ForByte {
 
 		ImVec2 ViewportPanelSize = ImGui::GetContentRegionAvail();
 
-		if (m_ViewportSize != *((glm::vec2*)&ViewportPanelSize)) 
+		if (m_ViewportSize != *((glm::vec2*)&ViewportPanelSize) && ViewportPanelSize.x > 0 && ViewportPanelSize.y > 0) 
 		{
 			m_Framebuffer->Resize((uint32_t)ViewportPanelSize.x, (uint32_t)ViewportPanelSize.y);
 			m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
