@@ -15,6 +15,10 @@
 
 #include "ForByte/ImGui/ImGuiLayer.h"
 
+#include "ForByte/Scene/Scene.h"
+#include "ForByte/Scene/Components.h"
+#include "ForByte/Scene/Entity.h"
+
 // ---Renderer---------------------------------
 #include "ForByte/Renderer/Renderer.h"
 #include "ForByte/Renderer/Renderer2D.h"

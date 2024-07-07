@@ -173,7 +173,8 @@ project "ForByte-Editor"
         "ForByte/vendor/spdlog/include",
         "ForByte/src",
         "ForByte/vendor",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.entt}"
     }
 
     links
