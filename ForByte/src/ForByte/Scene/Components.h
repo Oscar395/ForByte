@@ -1,6 +1,8 @@
 #pragma once
 #include "glm/glm.hpp"
 
+#include "ForByte/Renderer/Camera.h"
+
 namespace ForByte{
 
 	struct TagComponent
@@ -34,6 +36,17 @@ namespace ForByte{
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color) :
 			Color(color) {}
+	};
+
+	struct CameraComponent
+	{
+		ForByte::Camera Camera;
+		bool Primary = true; // TODO: Think about moving to scene
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection) :
+			Camera(projection) {}
 	};
 
 }

@@ -18,8 +18,6 @@ namespace ForByte {
 		FB_PROFILE_FUNCTION();
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 
-		m_CameraController.SetZoomLevel(5.0f);
-
 		FramebufferSpecification fbSpec;
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
@@ -31,6 +29,13 @@ namespace ForByte {
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
 		m_SquareEntity = square;
+
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+
+		m_SecondCamera = m_ActiveScene->CreateEntity("Clip-Space Entity");
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		cc.Primary = false;
 	}
 
 	void EditorLayer::OnDetach()
@@ -47,8 +52,8 @@ namespace ForByte {
 		RenderCommand::Clear();
 
 		// Update
-		if (m_ViewportFocused)
-			m_CameraController.OnUpdate(ts);
+		/*if (m_ViewportFocused)
+			m_CameraController.OnUpdate(ts);*/
 
 		// Render
 		Renderer2D::ResetStats();
@@ -56,11 +61,7 @@ namespace ForByte {
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		RenderCommand::Clear();
 
-		Renderer2D::BeginScene(m_CameraController.GetCamera());
-
 		m_ActiveScene->OnUpdate(ts);
-			
-		Renderer2D::EndScene();
 
 		m_Framebuffer->Unbind();
 	}
@@ -154,6 +155,14 @@ namespace ForByte {
 			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 		}
 
+		ImGui::DragFloat3("Camera Transform", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
+
+		if (ImGui::Checkbox("Camera A", &primary_Camera))
+		{
+			m_CameraEntity.GetComponent<CameraComponent>().Primary = primary_Camera;
+			m_SecondCamera.GetComponent<CameraComponent>().Primary = !primary_Camera;
+		}
+
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
@@ -170,7 +179,7 @@ namespace ForByte {
 			m_Framebuffer->Resize((uint32_t)ViewportPanelSize.x, (uint32_t)ViewportPanelSize.y);
 			m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
 
-			m_CameraController.OnResize(ViewportPanelSize.x, ViewportPanelSize.y);
+			//m_CameraController.OnResize(ViewportPanelSize.x, ViewportPanelSize.y);
 		}
 
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();

@@ -1438,6 +1438,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\ForByte\Scene\Entity.h" />
+    <ClInclude Include="src\ForByte\Renderer\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ForByte\Core\Application.cpp">
