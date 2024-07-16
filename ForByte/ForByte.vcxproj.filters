@@ -1439,6 +1439,8 @@
     </ClInclude>
     <ClInclude Include="src\ForByte\Scene\Entity.h" />
     <ClInclude Include="src\ForByte\Renderer\Camera.h" />
+    <ClInclude Include="src\ForByte\Scene\SceneCamera.h" />
+    <ClInclude Include="src\ForByte\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ForByte\Core\Application.cpp">
@@ -1532,5 +1534,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\ForByte\Scene\Entity.cpp" />
+    <ClCompile Include="src\ForByte\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

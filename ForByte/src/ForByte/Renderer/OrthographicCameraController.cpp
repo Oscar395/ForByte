@@ -70,6 +70,7 @@ namespace ForByte {
 		CalculateView();
 		return false;
 	}
+
 	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
 	{
 		FB_PROFILE_FUNCTION();

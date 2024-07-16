@@ -31,11 +31,45 @@ namespace ForByte {
 		m_SquareEntity = square;
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-		m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		m_CameraEntity.AddComponent<CameraComponent>();
 
 		m_SecondCamera = m_ActiveScene->CreateEntity("Clip-Space Entity");
-		auto& cc = m_SecondCamera.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
+
+		class CameraController : public ScriptableEntity
+		{
+		public:
+			void OnCreate()
+			{
+				
+			}
+
+			void OnUpdate(Timestep ts)
+			{
+				auto& transform = GetComponent<TransformComponent>().Transform;
+				float speed = 5.0f;
+				
+				if (Input::IsKeyPressed(FB_KEY_A))
+					transform[3][0] -= speed * ts;
+
+				if (Input::IsKeyPressed(FB_KEY_D))
+					transform[3][0] += speed * ts;
+
+				if (Input::IsKeyPressed(FB_KEY_W))
+					transform[3][1] += speed * ts;
+
+				if (Input::IsKeyPressed(FB_KEY_S))
+					transform[3][1] -= speed * ts;
+			}
+
+			void OnDestroy()
+			{
+
+			}
+		};
+
+		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	void EditorLayer::OnDetach()
@@ -163,6 +197,13 @@ namespace ForByte {
 			m_SecondCamera.GetComponent<CameraComponent>().Primary = !primary_Camera;
 		}
 
+		{
+			auto& camera = m_SecondCamera.GetComponent<CameraComponent>().Camera;
+			float orthoSize = camera.GetOrthoGraphicSize();
+			if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
+				camera.SetOrthographicSize(orthoSize);
+		}
+
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
@@ -179,6 +220,7 @@ namespace ForByte {
 			m_Framebuffer->Resize((uint32_t)ViewportPanelSize.x, (uint32_t)ViewportPanelSize.y);
 			m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
 
+			m_ActiveScene->OnViewportResize(ViewportPanelSize.x, ViewportPanelSize.y);
 			//m_CameraController.OnResize(ViewportPanelSize.x, ViewportPanelSize.y);
 		}
 
