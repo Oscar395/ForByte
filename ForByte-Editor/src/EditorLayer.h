@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ForByte.h"
+#include "Panels/SceneHierarchyPanel.h"
 
 namespace ForByte {
 
@@ -37,5 +38,8 @@ namespace ForByte {
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
 
 		glm::vec4 m_SquareColor = { 0.1f, 0.4f, 0.8f , 1.0f };
+
+		//Panels
+		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 }

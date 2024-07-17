@@ -10,24 +10,9 @@
 
 namespace ForByte {
 
-	static void DoMath(const glm::mat4& transform)
-	{
-
-	}
-
 	Scene::Scene() 
 	{
-		//entt::entity entity = m_Registry.create();
-
-		//m_Registry.emplace<TransformComponent>(entity, glm::mat4(1.0f));
-
-		//TransformComponent& tr = m_Registry.get<TransformComponent>(entity);
-
-		//auto view = m_Registry.view<TransformComponent>();
-		//for (auto entity : view)
-		//{
-		//	TransformComponent& transform = view.get<TransformComponent>(entity);
-		//}
+		
 	}
 
 	Scene::~Scene()
@@ -49,14 +34,15 @@ namespace ForByte {
 		{
 			m_Registry.view<NativeScriptComponent>().each([=](auto entity, NativeScriptComponent& nsc)
 			{
+				// TODO: Move to Scene::OnScenePlay
 				if (!nsc.Instance)
 				{
-					nsc.InstantiateFunction();
+					nsc.Instance = nsc.InstantiateScript();
 					nsc.Instance->m_Entity = Entity{ entity , this };
-					nsc.OnCreateFunction(nsc.Instance);
+					nsc.Instance->OnCreate();
 				}
 
-				nsc.OnUpdateFunction(nsc.Instance, ts);
+				nsc.Instance->OnUpdate(ts);
 			});
 		}
 
@@ -67,7 +53,7 @@ namespace ForByte {
 			auto view = m_Registry.view<TransformComponent, CameraComponent>();
 			for (auto entity : view)
 			{
-				auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
+				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 
 				if (camera.Primary)
 				{
@@ -86,7 +72,7 @@ namespace ForByte {
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group)
 			{
-				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
 				Renderer2D::DrawQuad(transform, sprite.Color);
 			}

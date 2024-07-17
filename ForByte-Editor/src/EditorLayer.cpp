@@ -42,7 +42,8 @@ namespace ForByte {
 		public:
 			void OnCreate()
 			{
-				
+				auto& transform = GetComponent<TransformComponent>().Transform;
+				transform[3][0] = rand() % 10 - 5.0f;
 			}
 
 			void OnUpdate(Timestep ts)
@@ -70,6 +71,9 @@ namespace ForByte {
 		};
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void EditorLayer::OnDetach()
@@ -169,6 +173,8 @@ namespace ForByte {
 			}
 			ImGui::EndMenuBar();
 		}
+
+		m_SceneHierarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Settings");
 
