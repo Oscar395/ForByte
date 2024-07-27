@@ -117,6 +117,9 @@
     <ClInclude Include="src\ForByte\Renderer\Buffer.h">
       <Filter>src\ForByte\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\ForByte\Renderer\Camera.h">
+      <Filter>src\ForByte\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\ForByte\Renderer\Framebuffer.h">
       <Filter>src\ForByte\Renderer</Filter>
     </ClInclude>
@@ -156,7 +159,19 @@
     <ClInclude Include="src\ForByte\Scene\Components.h">
       <Filter>src\ForByte\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\ForByte\Scene\Entity.h">
+      <Filter>src\ForByte\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\ForByte\Scene\Scene.h">
+      <Filter>src\ForByte\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ForByte\Scene\SceneCamera.h">
+      <Filter>src\ForByte\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ForByte\Scene\SceneSerializer.h">
+      <Filter>src\ForByte\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ForByte\Scene\ScriptableEntity.h">
       <Filter>src\ForByte\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
@@ -1437,10 +1452,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\ForByte\Scene\Entity.h" />
-    <ClInclude Include="src\ForByte\Renderer\Camera.h" />
-    <ClInclude Include="src\ForByte\Scene\SceneCamera.h" />
-    <ClInclude Include="src\ForByte\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ForByte\Core\Application.cpp">
@@ -1497,7 +1508,16 @@
     <ClCompile Include="src\ForByte\Renderer\VertexArray.cpp">
       <Filter>src\ForByte\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\ForByte\Scene\Entity.cpp">
+      <Filter>src\ForByte\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\ForByte\Scene\Scene.cpp">
+      <Filter>src\ForByte\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ForByte\Scene\SceneCamera.cpp">
+      <Filter>src\ForByte\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ForByte\Scene\SceneSerializer.cpp">
       <Filter>src\ForByte\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1533,7 +1553,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\ForByte\Scene\Entity.cpp" />
-    <ClCompile Include="src\ForByte\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

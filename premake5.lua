@@ -19,10 +19,12 @@ IncludeDir["ImGui"] = "ForByte/vendor/imgui"
 IncludeDir["glm"] = "ForByte/vendor/glm"
 IncludeDir["stb_image"] = "ForByte/vendor/stb_image"
 IncludeDir["entt"] = "ForByte/vendor/entt/include"
+IncludeDir["yaml_cpp"] = "ForByte/vendor/yaml-cpp/include"
 
 include "ForByte/vendor/GLFW"
 include "ForByte/vendor/Glad"
 include "ForByte/vendor/imgui"
+include "ForByte/vendor/yaml-cpp"
 
 project "ForByte"
     location "ForByte"
@@ -62,7 +64,8 @@ project "ForByte"
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.stb_image}",
-        "%{IncludeDir.entt}"
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.yaml_cpp}"
     }
 
     links 
@@ -70,6 +73,7 @@ project "ForByte"
         "GLFW",
         "Glad",
         "ImGui",
+        "yaml-cpp",
         "opengl32.lib"
     }
 
@@ -174,7 +178,8 @@ project "ForByte-Editor"
         "ForByte/src",
         "ForByte/vendor",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.entt}"
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.yaml_cpp}"
     }
 
     links
