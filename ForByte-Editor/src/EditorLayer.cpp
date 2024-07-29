@@ -6,6 +6,8 @@
 
 #include <ForByte/Scene/SceneSerializer.h>
 
+#include "ForByte/Utils/PlatformUtils.h"
+
 namespace ForByte {
 
 	EditorLayer::EditorLayer()
@@ -179,17 +181,14 @@ namespace ForByte {
 				// Disabling fullscreen would allow the window to be moved to the front of other windows,
 				// which we can't undo at the moment without finer window depth/z control.
 
-				if (ImGui::MenuItem("Serialize"))
-				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Serialize("assets/scenes/Example.fb");
-				}
+				if (ImGui::MenuItem("New", "Ctrl+N"))
+					NewScene();
 
-				if (ImGui::MenuItem("Deserialize"))
-				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Deserialize("assets/scenes/Example.fb");
-				}
+				if (ImGui::MenuItem("Open...", "Ctrl+O"))
+					OpenScene();
+
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					SaveSceneAs();
 
 				if (ImGui::MenuItem("Exit"))
 					ForByte::Application::Get().Close();
@@ -240,5 +239,75 @@ namespace ForByte {
 	void EditorLayer::OnEvent(Event& e)
 	{
 		m_CameraController.OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+
+		dispatcher.Distpatch<KeyPressedEvent>(FB_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		// Shortcuts
+		if (e.GetRepeatCount() > 0)
+			return false;
+
+		bool control = Input::IsKeyPressed(FB_KEY_LEFT_CONTROL) || Input::IsKeyPressed(FB_KEY_RIGHT_CONTROL);
+		bool shift = Input::IsKeyPressed(FB_KEY_LEFT_SHIFT) || Input::IsKeyPressed(FB_KEY_RIGHT_SHIFT);
+		switch (e.GetKeyCode())
+		{
+			case FB_KEY_N:
+			{
+				if (control)
+					NewScene();
+				break;
+			}
+
+			case FB_KEY_O:
+			{
+				if (control)
+					OpenScene();
+				break;
+			}
+
+			case FB_KEY_S:
+			{
+				if (control && shift)
+					SaveSceneAs();
+				break;
+			}
+		}
+		return false;
+	}
+
+	void EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("ForByte Scene (*.fb)\0*.fb\0");
+		if (!filepath.empty())
+		{
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::SaveFile("ForByte Scene (*.fb)\0*.fb\0");
+
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(filepath);
+		}
 	}
 }
