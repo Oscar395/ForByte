@@ -20,6 +20,7 @@ IncludeDir["glm"] = "ForByte/vendor/glm"
 IncludeDir["stb_image"] = "ForByte/vendor/stb_image"
 IncludeDir["entt"] = "ForByte/vendor/entt/include"
 IncludeDir["yaml_cpp"] = "ForByte/vendor/yaml-cpp/include"
+IncludeDir["ImGuizmo"] = "ForByte/vendor/ImGuizmo"
 
 include "ForByte/vendor/GLFW"
 include "ForByte/vendor/Glad"
@@ -46,7 +47,9 @@ project "ForByte"
         "%{prj.name}/vendor/stb_image/**.h",
         "%{prj.name}/vendor/stb_image/**.cpp",
         "%{prj.name}/vendor/glm/glm/**.hpp",
-        "%{prj.name}/vendor/glm/glm/**.inl"
+        "%{prj.name}/vendor/glm/glm/**.inl",
+        "%{prj.name}/vendor/ImGuizmo/ImGuizmo.h",
+        "%{prj.name}/vendor/ImGuizmo/ImGuizmo.cpp"
     }
 
     defines 
@@ -65,7 +68,8 @@ project "ForByte"
         "%{IncludeDir.glm}",
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.entt}",
-        "%{IncludeDir.yaml_cpp}"
+        "%{IncludeDir.yaml_cpp}",
+        "%{IncludeDir.ImGuizmo}"
     }
 
     links 
@@ -76,6 +80,9 @@ project "ForByte"
         "yaml-cpp",
         "opengl32.lib"
     }
+
+    filter "files:ForByte/vendor/ImGuizmo/**.cpp"
+        flags { "NoPCH" }
 
     filter "system:windows"
         systemversion "latest"
@@ -179,7 +186,8 @@ project "ForByte-Editor"
         "ForByte/vendor",
         "%{IncludeDir.glm}",
         "%{IncludeDir.entt}",
-        "%{IncludeDir.yaml_cpp}"
+        "%{IncludeDir.yaml_cpp}",
+        "%{IncludeDir.ImGuizmo}"
     }
 
     links
