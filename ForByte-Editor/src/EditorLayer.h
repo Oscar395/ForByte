@@ -2,6 +2,7 @@
 
 #include "ForByte.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "ForByte/Renderer/EditorCamera.h"
 
 namespace ForByte {
 
@@ -37,6 +38,8 @@ namespace ForByte {
 		Entity m_SecondCamera;
 
 		bool primary_Camera = true;
+
+		EditorCamera m_EditorCamera;
 
 		Ref<Texture2D> m_CheckerboardTexture;
 

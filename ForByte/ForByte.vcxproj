@@ -164,6 +164,7 @@
     <ClInclude Include="src\ForByte\Math\Math.h" />
     <ClInclude Include="src\ForByte\Renderer\Buffer.h" />
     <ClInclude Include="src\ForByte\Renderer\Camera.h" />
+    <ClInclude Include="src\ForByte\Renderer\EditorCamera.h" />
     <ClInclude Include="src\ForByte\Renderer\Framebuffer.h" />
     <ClInclude Include="src\ForByte\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\ForByte\Renderer\OrthographicCamera.h" />
@@ -620,6 +621,7 @@
     <ClCompile Include="src\ForByte\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\ForByte\Math\Math.cpp" />
     <ClCompile Include="src\ForByte\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\ForByte\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\ForByte\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\ForByte\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\ForByte\Renderer\OrthographicCameraController.cpp" />

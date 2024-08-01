@@ -26,11 +26,14 @@ namespace ForByte {
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 
 		FramebufferSpecification fbSpec;
+		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
 		m_Framebuffer = Framebuffer::Create(fbSpec);
 
 		m_ActiveScene = CreateRef<Scene>();
+
+		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
 #if 0
 
@@ -103,8 +106,10 @@ namespace ForByte {
 		RenderCommand::Clear();
 
 		// Update
-		/*if (m_ViewportFocused)
-			m_CameraController.OnUpdate(ts);*/
+		if (m_ViewportFocused)
+			m_CameraController.OnUpdate(ts);
+
+		m_EditorCamera.OnUpdate(ts);
 
 		// Render
 		Renderer2D::ResetStats();
@@ -112,7 +117,7 @@ namespace ForByte {
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		RenderCommand::Clear();
 
-		m_ActiveScene->OnUpdate(ts);
+		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 		m_Framebuffer->Unbind();
 	}
@@ -227,14 +232,22 @@ namespace ForByte {
 		{
 			m_Framebuffer->Resize((uint32_t)ViewportPanelSize.x, (uint32_t)ViewportPanelSize.y);
 			m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
-
+			m_EditorCamera.SetViewportSize(ViewportPanelSize.x, ViewportPanelSize.y);
 			m_ActiveScene->OnViewportResize(ViewportPanelSize.x, ViewportPanelSize.y);
 			//m_CameraController.OnResize(ViewportPanelSize.x, ViewportPanelSize.y);
 		}
 
-		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID(1);
 		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+		ImGui::Begin("Color Window");
 		
+		ImVec2 ColorPanelSize = ImGui::GetContentRegionAvail();
+
+		uint32_t colorTextureID = m_Framebuffer->GetColorAttachmentRendererID(0);
+		ImGui::Image((void*)colorTextureID, ColorPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+		ImGui::End();
 
 		// Gizmos
 		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
@@ -247,10 +260,16 @@ namespace ForByte {
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
 			// Camera
-			auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
-			const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
-			const glm::mat4& cameraProjection = camera.GetProjection();
-			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+			 
+			// Runtime camera from entity
+			// auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			// const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+			// const glm::mat4& cameraProjection = camera.GetProjection();
+			// glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
+
+			// Editor Camera
+			const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
+			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
 
 			// Entity transform
 			auto& tc = selectedEntity.GetComponent<TransformComponent>();
@@ -288,9 +307,9 @@ namespace ForByte {
 	void EditorLayer::OnEvent(Event& e)
 	{
 		m_CameraController.OnEvent(e);
+		m_EditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
-
 		dispatcher.Distpatch<KeyPressedEvent>(FB_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 	}
 

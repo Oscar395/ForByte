@@ -137,6 +137,21 @@ namespace ForByte {
 		s_Data.TextureSlotIndex = 1;
 	}
 
+	void Renderer2D::BeginScene(const EditorCamera& camera)
+	{
+		FB_PROFILE_FUNCTION();
+
+		glm::mat4 viewProj = camera.GetViewProjection();
+
+		s_Data.TextureShader->Bind();
+		s_Data.TextureShader->SetMat4("u_ViewProjection", viewProj);
+
+		s_Data.QuadIndexCount = 0;
+		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+
+		s_Data.TextureSlotIndex = 1;
+	}
+
 	void Renderer2D::EndScene()
 	{
 		FB_PROFILE_FUNCTION();
