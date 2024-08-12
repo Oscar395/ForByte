@@ -1,0 +1,11 @@
+Scene: Untitled
+Entities:
+  - Entity: 123484898357465
+    TagComponent:
+      Tag: Front
+    TransformComponent:
+      Translation: [-0.60606873, 0.159540847, 0]
+      Rotation: [0, -0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.297297299, 0.297297299, 0.297297299, 1]

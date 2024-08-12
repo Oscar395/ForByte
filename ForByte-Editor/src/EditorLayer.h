@@ -20,9 +20,11 @@ namespace ForByte {
 		void OnEvent(Event& e) override;
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 
 		void NewScene();
 		void OpenScene();
+		void SaveScene(std::string& sceneFilepath);
 		void SaveSceneAs();
 	private:
 		ForByte::OrthographicCameraController m_CameraController;
@@ -33,9 +35,14 @@ namespace ForByte {
 		Ref<Framebuffer> m_Framebuffer;
 
 		Ref<Scene> m_ActiveScene;
+		std::string m_SceneFilePath = "";
+
 		Entity m_SquareEntity;
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
+
+
+		Entity m_HoveredEntity;
 
 		bool primary_Camera = true;
 
