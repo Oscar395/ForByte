@@ -20,6 +20,7 @@ namespace ForByte {
 		static void BeginScene(const OrthographicCamera& camera); // TODO: Remove
 		static void BeginScene(const EditorCamera& camera);
 		static void EndScene();
+		static void StartBatch();
 		static void Flush();
 
 		// Primitives
