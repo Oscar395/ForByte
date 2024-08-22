@@ -2,6 +2,8 @@
 
 #include "ForByte.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
+
 #include "ForByte/Renderer/EditorCamera.h"
 
 namespace ForByte {
@@ -24,6 +26,7 @@ namespace ForByte {
 
 		void NewScene();
 		void OpenScene();
+		void OpenScene(const std::filesystem::path& path);
 		void SaveScene(std::string& sceneFilepath);
 		void SaveSceneAs();
 	private:
@@ -60,5 +63,6 @@ namespace ForByte {
 
 		//Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 	};
 }
