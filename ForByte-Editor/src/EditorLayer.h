@@ -44,14 +44,13 @@ namespace ForByte {
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
 
-
 		Entity m_HoveredEntity;
 
 		bool primary_Camera = true;
 
 		EditorCamera m_EditorCamera;
 
-		Ref<Texture2D> m_CheckerboardTexture;
+		Ref<Texture2D> moveIconTexture, rotateIconTexture, scaleIconTexture;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };

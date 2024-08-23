@@ -25,7 +25,10 @@ namespace ForByte {
 	void EditorLayer::OnAttach()
 	{
 		FB_PROFILE_FUNCTION();
-		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
+		//m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
+		moveIconTexture = Texture2D::Create("Resources/Icons/Viewport/moveIcon.png");
+		rotateIconTexture = Texture2D::Create("Resources/Icons/Viewport/rotateIcon.png");
+		scaleIconTexture = Texture2D::Create("Resources/Icons/Viewport/scaleIcon.png");
 
 		FramebufferSpecification fbSpec;
 		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
@@ -252,7 +255,6 @@ namespace ForByte {
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
-
 		//auto viewportOffset = ImGui::GetCursorPos(); // Includes tab bar
 
 		auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
@@ -335,7 +337,35 @@ namespace ForByte {
 				tc.Scale = scale;
 			}
 		}
-		
+
+		// viewport gizmos control
+		float padding = 8.0f;
+		ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+		vMin.x += ImGui::GetWindowPos().x + padding;
+		vMin.y += ImGui::GetWindowPos().y + padding;
+
+		ImGui::SetNextWindowPos(vMin);
+
+		ImGuiWindowFlags window_sflags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
+
+		ImVec2 iconSize = ImVec2(28.0f, 28.0f);
+		//ImVec4 bgButtonColor = ImVec4(2, 2, 0, 0);
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+		if (ImGui::Begin("controls", 0, window_sflags))
+		{
+			if (ImGui::ImageButton((ImTextureID)moveIconTexture->GetRendererID(), iconSize, { 0, 1 }, { 1, 0 }))
+				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+
+			if (ImGui::ImageButton((ImTextureID)rotateIconTexture->GetRendererID(), iconSize, { 0, 1 }, { 1, 0 }))
+				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+
+			if (ImGui::ImageButton((ImTextureID)scaleIconTexture->GetRendererID(), iconSize, { 0, 1 }, { 1, 0 }))
+				m_GizmoType = ImGuizmo::OPERATION::SCALE;
+		}
+		ImGui::PopStyleColor();
+
+		ImGui::End();
+
 		ImGui::End();
 		ImGui::PopStyleVar();
 

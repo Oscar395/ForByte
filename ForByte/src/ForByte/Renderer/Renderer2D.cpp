@@ -265,7 +265,7 @@ namespace ForByte {
 		FB_PROFILE_FUNCTION();
 
 		constexpr size_t quadVertexCount = 4;
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		//constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		constexpr glm::vec2 textureCoords[] = {
 			{0.0f, 0.0f},
 			{1.0f, 0.0f},
@@ -299,7 +299,7 @@ namespace ForByte {
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Color = tintColor;
 			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->TilingFactor = TilingFactor;
@@ -378,7 +378,7 @@ namespace ForByte {
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		// constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		float textureIndex = 0.0f;
 
@@ -405,7 +405,7 @@ namespace ForByte {
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Color = tintColor;
 			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->TilingFactor = TilingFactor;
@@ -434,7 +434,7 @@ namespace ForByte {
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		//constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		float textureIndex = 0.0f;
 
@@ -461,7 +461,7 @@ namespace ForByte {
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Color = tintColor;
 			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->TilingFactor = TilingFactor;
@@ -475,7 +475,10 @@ namespace ForByte {
 
 	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID)
 	{
-		DrawQuad(transform, src.Color, entityID);
+		if (src.Texture)
+			DrawQuad(transform, src.Texture, src.TilingFactor, src.Color, entityID);
+		else
+			DrawQuad(transform, src.Color, entityID);
 	}
 
 	void Renderer2D::ResetStats() 

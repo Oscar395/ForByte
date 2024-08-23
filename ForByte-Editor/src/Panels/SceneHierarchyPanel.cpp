@@ -6,8 +6,11 @@
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
+#include <filesystem>
 
 namespace ForByte {
+
+	extern const std::filesystem::path g_Assetspath;
 
 	SceneHierarchyPanel::SceneHierarchyPanel(Ref<Scene>& context)
 	{
@@ -321,6 +324,28 @@ namespace ForByte {
 		DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](auto& component)
 		{
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+			// Texture
+			ImVec2 textureSize = ImVec2(60.0f, 60.0f);
+
+			if(component.Texture)
+				ImGui::ImageButton((ImTextureID)component.Texture->GetRendererID(), textureSize, {0, 1}, {1, 0});
+			else
+				ImGui::ImageButton(0, textureSize, { 0, 1 }, { 1, 0 });
+			//ImGui::Button("Texture", ImVec2(100.0f, 0.0f));
+
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+				{
+					const wchar_t* path = (const wchar_t*)payload->Data;
+					std::filesystem::path texturePath = std::filesystem::path(g_Assetspath) / path;
+					component.Texture = Texture2D::Create(texturePath.string());
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+
+			ImGui::DragFloat("TilingFactor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
 		});
 
 	}
